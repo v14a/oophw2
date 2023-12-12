@@ -1,4 +1,4 @@
-with open('recipes.txt', encoding='utf-8') as f:
+with open('cookbook/recipes.txt', encoding='utf-8') as f:
     cook_book = {}
     for line in f:
         title = line.strip()
@@ -21,16 +21,12 @@ def get_shop_list_by_dishes(dishes, person_count):
                 component = cook_book.get(dish)
                 for ingredient in component:
                     measure_dict = {}
-                    measure_dict['measure'] = ingredient['measure']
                     count = ingredient['quantity'] * person_count
-                    if ingredient['ingredient_name'] not in shoping_list.keys():
-                        measure_dict['quantity'] = count
-                    else:
+                    if ingredient['ingredient_name'] in shoping_list.keys():
                         count += count
-                        measure_dict['quantity'] = count
+                    measure_dict['measure'] = ingredient['measure']
+                    measure_dict['quantity'] = count
                     shoping_list[ingredient['ingredient_name']] = measure_dict
         else:
             print(f'{dish}: рецепт не найден')
     return shoping_list
-
-print(get_shop_list_by_dishes(['Фахитос', 'Запеченный картофель', 'Омлет'], 2))
